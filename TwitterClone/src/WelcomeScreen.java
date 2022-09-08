@@ -29,7 +29,7 @@ public class WelcomeScreen extends JFrame {
 		setVisible(true);
 		setTitle("Welcome screen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 902, 604);
+		setBounds(100, 100, 902, 699);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(30, 144, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -42,14 +42,14 @@ public class WelcomeScreen extends JFrame {
 		
 		JLabel lblWelcome = new JLabel("Welcome To Twitter");
 		lblWelcome.setFont(new Font("Dialog", Font.BOLD, 22));
-		lblWelcome.setBounds(323, 176, 307, 29);
+		lblWelcome.setBounds(321, 220, 307, 29);
 		contentPane.add(lblWelcome);
 		
 		JButton loginBtn = new JButton("Login ");
 		loginBtn.setBackground(new Color(0, 0, 128));
 		loginBtn.setForeground(new Color(255, 255, 255));
 		loginBtn.setFont(new Font("Dialog", Font.BOLD, 18));
-		loginBtn.setBounds(335, 262, 244, 40);
+		loginBtn.setBounds(335, 304, 244, 40);
 		contentPane.add(loginBtn);
 		
 		loginBtn.addActionListener(new ActionListener(){
@@ -63,7 +63,7 @@ public class WelcomeScreen extends JFrame {
 		btnCreateAccount.setForeground(Color.WHITE);
 		btnCreateAccount.setFont(new Font("Dialog", Font.BOLD, 18));
 		btnCreateAccount.setBackground(new Color(0, 0, 128));
-		btnCreateAccount.setBounds(335, 345, 244, 40);
+		btnCreateAccount.setBounds(335, 386, 244, 40);
 		contentPane.add(btnCreateAccount);
         
 		

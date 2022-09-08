@@ -8,11 +8,14 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.SystemColor;
 
 public class SignInScreen extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField usernameField;
+	private JTextField PassField;
 
 
 	public SignInScreen() {
@@ -20,7 +23,7 @@ public class SignInScreen extends JFrame {
 		setTitle("Login Screen");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
-		setBounds(100, 100, 902, 604);
+		setBounds(100, 100, 902, 699);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -45,5 +48,29 @@ public class SignInScreen extends JFrame {
 		usernameField.setBounds(125, 271, 611, 44);
 		contentPane.add(usernameField);
 		usernameField.setColumns(10);
+		
+		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setFont(new Font("Dialog", Font.BOLD, 17));
+		lblPassword.setBounds(115, 354, 307, 29);
+		contentPane.add(lblPassword);
+		
+		PassField = new JTextField();
+		PassField.setColumns(10);
+		PassField.setBounds(125, 395, 611, 44);
+		contentPane.add(PassField);
+		
+		JButton btnLogIn = new JButton("Log In ");
+		btnLogIn.setForeground(new Color(255, 255, 255));
+		btnLogIn.setFont(new Font("Dialog", Font.BOLD, 18));
+		btnLogIn.setBackground(new Color(30, 144, 255));
+		btnLogIn.setBounds(125, 465, 611, 40);
+		contentPane.add(btnLogIn);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.setForeground(new Color(30, 144, 255));
+		btnBack.setFont(new Font("Dialog", Font.BOLD, 18));
+		btnBack.setBackground(new Color(255, 255, 255));
+		btnBack.setBounds(125, 527, 611, 40);
+		contentPane.add(btnBack);
 	}
 }
