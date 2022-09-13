@@ -6,11 +6,17 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.awt.event.ActionEvent;
 
 public class SignUpScreen extends JFrame {
 
@@ -19,10 +25,11 @@ public class SignUpScreen extends JFrame {
 	private JTextField userNameField;
 	private JTextField GenderField;
 	private JTextField PassField;
-	private JTextField textField;
+	private JTextField ageField;
 
 	
 	public SignUpScreen() {
+	
 		setBackground(new Color(192, 192, 192));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
@@ -107,12 +114,47 @@ public class SignUpScreen extends JFrame {
 		lblAge.setBounds(157, 435, 307, 29);
 		contentPane.add(lblAge);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(167, 464, 546, 34);
-		contentPane.add(textField);
+		ageField = new JTextField();
+		ageField.setColumns(10);
+		ageField.setBounds(167, 464, 546, 34);
+		contentPane.add(ageField);
+		
+		ArrayList<UserDataClass> UserDataHolder = Main.UserDataHolder;
 		
 		JButton createBtn = new JButton("Create");
+		createBtn.addActionListener(new ActionListener() {
+
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				 Long datetime = System.currentTimeMillis();
+			     Timestamp timestamp = new Timestamp(datetime);
+			     boolean checkState=false;
+				
+				if(!(ageField.getText().equals("")&&PassField.getText().equals("")&&GenderField.getText().equals("")&&userNameField.getText().equals("")&&nameField.getText().equals(""))) {
+					 for(int i=0;i<UserDataHolder.size();i++) {
+						 if(UserDataHolder.get(i).getUsername().equals(userNameField.getText())) {
+							 checkState=true;
+						 }
+					 }
+					 if(checkState==false) {
+						 UserDataHolder.add(new UserDataClass(nameField.getText(),userNameField.getText(),GenderField.getText(),PassField.getText(),timestamp.toString(), Integer.parseInt(ageField.getText()),true,"./imgpath"));
+                         binaryDataStore bn= new  binaryDataStore();
+                         bn.WriteUserData(nameField.getText(),userNameField.getText(),GenderField.getText(),PassField.getText(),timestamp.toString(), Integer.parseInt(ageField.getText()),true,"./imgpath");
+                         // show msg data added successfully
+                        dispose();
+                       new TimelineScreen();
+					 }else {
+						 // username already existed 
+					 }
+					 
+				}else {
+				
+					// empty field
+				}
+				
+			}
+		});
 		createBtn.setBackground(new Color(30, 144, 255));
 		createBtn.setForeground(new Color(25, 25, 112));
 		createBtn.setFont(new Font("Dialog", Font.BOLD, 16));
@@ -120,10 +162,28 @@ public class SignUpScreen extends JFrame {
 		contentPane.add(createBtn);
 		
 		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new WelcomeScreen();
+				 dispose(); 
+			} 
+		});
 		btnBack.setForeground(new Color(30, 144, 255));
 		btnBack.setFont(new Font("Dialog", Font.BOLD, 16));
 		btnBack.setBackground(new Color(25, 25, 112));
 		btnBack.setBounds(367, 587, 144, 34);
 		contentPane.add(btnBack);
+		
+		JButton btnUploadProfile = new JButton("Upload Profile");
+		btnUploadProfile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			   
+			}
+		});
+		btnUploadProfile.setForeground(new Color(25, 25, 112));
+		btnUploadProfile.setFont(new Font("Dialog", Font.BOLD, 16));
+		btnUploadProfile.setBackground(new Color(30, 144, 255));
+		btnUploadProfile.setBounds(687, 54, 144, 34);
+		contentPane.add(btnUploadProfile);
 	}
 }
