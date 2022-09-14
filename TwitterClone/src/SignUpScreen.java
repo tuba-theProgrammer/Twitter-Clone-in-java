@@ -27,7 +27,6 @@ public class SignUpScreen extends JFrame {
 	private JTextField PassField;
 	private JTextField ageField;
 
-	
 	public SignUpScreen() {
 	
 		setBackground(new Color(192, 192, 192));
@@ -142,8 +141,10 @@ public class SignUpScreen extends JFrame {
                          binaryDataStore bn= new  binaryDataStore();
                          bn.WriteUserData(nameField.getText(),userNameField.getText(),GenderField.getText(),PassField.getText(),timestamp.toString(), Integer.parseInt(ageField.getText()),true,"./imgpath");
                          // show msg data added successfully
+                         
+                      
                         dispose();
-                       new TimelineScreen();
+                       new TimelineScreen(userNameField.getText());
 					 }else {
 						 // username already existed 
 					 }

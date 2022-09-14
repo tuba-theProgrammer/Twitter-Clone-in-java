@@ -1,32 +1,35 @@
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.border.EmptyBorder;
 import java.awt.Color;
-import javax.swing.JButton;
+import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
-public class TimelineScreen extends JFrame {
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import java.awt.SystemColor;
+
+public class createTweet extends JFrame {
 
 	private JPanel contentPane;
 	private final JPanel panel = new JPanel();
-   String username;
+	private JTextField creatTweetBox;
+	private JTextField hashTagbox;
+    String username;
 
 
 	/**
 	 * Create the frame.
 	 */
-	public TimelineScreen(String username) {
+	public createTweet(String username) {
 		this.username= username;
 		setVisible(true);
 		setBackground(new Color(128, 128, 128));
@@ -115,7 +118,6 @@ public class TimelineScreen extends JFrame {
 				new CloseSessionsScreen(username);
 				dispose();
 			}
-			
 		});
 		btnCloseSessions.setForeground(Color.WHITE);
 		btnCloseSessions.setFont(new Font("Dialog", Font.BOLD, 16));
@@ -128,63 +130,74 @@ public class TimelineScreen extends JFrame {
 		contentPane.add(setPanel);
 		setPanel.setLayout(null);
 		
-		  JLabel lblNewLabel = new JLabel("Display All Tweets");
-			lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 20));
-			lblNewLabel.setBounds(193, 12, 342, 45);
-			setPanel.add(lblNewLabel);
+		JLabel lblNewLabel = new JLabel("Send Tweet");
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblNewLabel.setBounds(268, 42, 146, 23);
+		setPanel.add(lblNewLabel);
 		
+		creatTweetBox = new JTextField();
+		creatTweetBox.setBounds(12, 107, 665, 101);
+		setPanel.add(creatTweetBox);
+		creatTweetBox.setColumns(10);
 		
-			
-			
-			
-			
-			
-		 
-		  
-		  
-		  binaryDataStore bn = new binaryDataStore();
-		  ArrayList<TweetsDataHolder> tweetData =    bn.getTweetsData("tuba");
-		  JLabel tdLb;
-		  JLabel usernameLb;
-		  JLabel tweetTimeLb;
-		  JSeparator separator;
-		  
-			int x1= 121;
-			int x2= 94;
-			int x3 = 94; 
-			int x4 = 207;
-		  
-		  for(int i=tweetData.size()-1;i>=0;i--) {
-			  
-			 
-			    tdLb = new JLabel(tweetData.get(i).getContent());
-				tdLb.setBounds(12,  x1, 665, 74);
-				setPanel.add(tdLb);
+		JLabel lblCreateTweet = new JLabel("Create Tweet");
+		lblCreateTweet.setFont(new Font("Dialog", Font.BOLD, 15));
+		lblCreateTweet.setBounds(26, 80, 125, 15);
+		setPanel.add(lblCreateTweet);
+		
+		hashTagbox = new JTextField();
+		hashTagbox.setBounds(12, 242, 665, 36);
+		setPanel.add(hashTagbox);
+		hashTagbox.setColumns(10);
+		
+		JLabel lblAddHashtags = new JLabel("Add HashTags");
+		lblAddHashtags.setFont(new Font("Dialog", Font.BOLD, 15));
+		lblAddHashtags.setBounds(22, 215, 125, 15);
+		setPanel.add(lblAddHashtags);
+		
+		ArrayList<String> hashTagData = new ArrayList<String>();
+		
+		JButton addHashTagBtn = new JButton("Add HashTag");
+		addHashTagBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!hashTagbox.getText().equals("")) {
+					
+					hashTagData.add("#"+hashTagbox.getText());
+					hashTagbox.setText("");
+				}else {
+					// show error msg
+				}
 				
-				usernameLb = new JLabel(tweetData.get(i).getUsername());
-				usernameLb.setBounds(12, x2, 114, 15);
-				setPanel.add(usernameLb);
 				
-				tweetTimeLb = new JLabel(tweetData.get(i).getCreatetime());
-				tweetTimeLb.setBounds(528, x3, 126, 15);
-				setPanel.add(tweetTimeLb);
+			}
+		});
+		addHashTagBtn.setForeground(new Color(255, 255, 255));
+		addHashTagBtn.setBackground(new Color(0, 0, 128));
+		addHashTagBtn.setFont(new Font("Dialog", Font.BOLD, 16));
+		addHashTagBtn.setBounds(247, 290, 186, 36);
+		setPanel.add(addHashTagBtn);
+		
+		JButton sendTweetBtn = new JButton("Send Tweet");
+		sendTweetBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				
-				separator = new JSeparator();
-				separator.setBounds(22, x4, 655, 2);
-				setPanel.add(separator);
-			  
-				 x1+=150;
-				   x2+=150;
-				   x3+=150;
-				   x4+=150;
-		  }
-		  
-
-		  
-		  JScrollPane scrollPane = new JScrollPane(setPanel);
-		    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	       scrollPane.setBounds(291, -14,980, 600);
-	        contentPane.add(scrollPane);
-		  
+				 Long datetime = System.currentTimeMillis();
+			     Timestamp timestamp = new Timestamp(datetime);
+				binaryDataStore bn = new binaryDataStore();
+				if(creatTweetBox.getText().equals("")) {
+					// show error msg
+				}else {
+					bn.createTweets(username,creatTweetBox.getText(),timestamp.toString(),hashTagData);
+					creatTweetBox.setText("");
+				}
+			
+			}
+		});
+		sendTweetBtn.setForeground(Color.WHITE);
+		sendTweetBtn.setFont(new Font("Dialog", Font.BOLD, 16));
+		sendTweetBtn.setBackground(SystemColor.activeCaption);
+		sendTweetBtn.setBounds(247, 340, 186, 36);
+		setPanel.add(sendTweetBtn);
+		
 	}
 }

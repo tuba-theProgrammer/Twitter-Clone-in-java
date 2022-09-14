@@ -14,12 +14,14 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class WelcomeScreen extends JFrame {
 
 	private JPanel contentPane;
-
+    static ImageIcon img;
+    static JLabel imgLabel;
 	/**
 	 * Create the frame.
 	 * @throws IOException 
@@ -35,9 +37,9 @@ public class WelcomeScreen extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel imgLabel = new JLabel("imgLabel");
-		imgLabel.setBounds(409, 71, 70, 15);
+		//img= new ImageIcon("./Resources/twitlogo.jpg");
+		imgLabel = new JLabel("");
+		imgLabel.setBounds(335, 12, 244, 117);
 		contentPane.add(imgLabel);
 		
 		JLabel lblWelcome = new JLabel("Welcome To Twitter");
@@ -56,7 +58,9 @@ public class WelcomeScreen extends JFrame {
 
 	         //defining a method actionPerformed
 	        public void actionPerformed(ActionEvent ae){ 
-	        	new SignInScreen();
+	        //	new SignInScreen();
+	        	new TimelineScreen("tuba");
+	        	
 	        }});
 		
 		JButton btnCreateAccount = new JButton("Create Account");
