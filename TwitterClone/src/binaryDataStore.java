@@ -23,6 +23,7 @@ public class binaryDataStore {
 		    FileOutputStream fos = new FileOutputStream(new File("./Resources/users.twc"),true);
 	
 	        DataOutputStream dout=new DataOutputStream(fos);
+	        String folderName= Username;
 		    name= name+",";
 		    Username=Username+",";
 		    gender=gender+",";
@@ -31,6 +32,7 @@ public class binaryDataStore {
 		    String ageVal=Integer.toString(age)+",";
 		    String status= new Boolean(Accountstatus).toString()+",";
 		    photoAdd=photoAdd+",";
+		  
 		    
 		    // write data to file
 		    dout.write(name.getBytes());
@@ -42,7 +44,7 @@ public class binaryDataStore {
 		    dout.write(status.getBytes());
 		    dout.write(photoAdd.getBytes());
 		    dout.write("\n".getBytes());
-		    File f1 = new File("./Resources/"+Username);  
+		    File f1 = new File("./Resources/"+folderName);  
 		      //Creating a folder using mkdir() method  
 		      boolean bool = f1.mkdir();  
 		      if(bool){  
@@ -69,8 +71,9 @@ public class binaryDataStore {
 	}
 	
 	
-	public String readUserDataFromFile() {
+	public  ArrayList<UserDataClass> readUserDataFromFile() {
 		
+		 ArrayList<UserDataClass> getUserData= new  ArrayList<UserDataClass>();
 		try {
 		    // create a reader
 		    FileInputStream fis = new FileInputStream(new File("./Resources/users.twc"));
@@ -80,20 +83,109 @@ public class binaryDataStore {
 
 		    // read one byte at a time
 		    int ch;
+		    String s="";
 		    while ((ch = reader.read()) != -1) {
-		        System.out.print((char) ch);
+		      // System.out.print((char) ch);
+		      s=s+String.valueOf((char)ch); 
+		      if((char)ch=='\n') {
+		    	 
+		    	  String[] allData = s.split(",");
+		    	  ArrayList<String> follwersList = readFollowers(allData[1]);
+		    	  ArrayList<String> followingList =readFollowings(allData[1]);
+		    	 
+		    	  getUserData.add(new UserDataClass(allData[0],allData[1],allData[2],allData[3],allData[4],Integer.parseInt(allData[5]),new Boolean(allData[6]),allData[7],followingList,follwersList));
+		          
+		      }
 		    }
 
 		    // close the reader
 		    reader.close();
-		    System.out.println((char)ch);
+		 
+		
+		} catch (IOException ex) {
+		    ex.printStackTrace();
+		}
+		
+		return getUserData;
+	}
+	
+	
+	
+	public  ArrayList<String>  readFollowers(String username) {
+		ArrayList<String> readAllFollowers= new ArrayList<String>();
+		try {
+	    // create a reader
+	    FileInputStream fis = new FileInputStream(new File("./Resources/"+username+"/followers.twc"));
+	    
+	    // specify UTF_16 characer encoding
+	    InputStreamReader reader = new InputStreamReader(fis, StandardCharsets.US_ASCII);
+
+	    // read one byte at a time
+	    int ch;
+	    String s = "";
+	    while ((ch = reader.read()) != -1) {
+	    	 // System.out.print((char) ch);
+		      s=s+String.valueOf((char)ch); 
+	    }
+
+	    // close the reader
+	    reader.close();
+	    System.out.println("here is data "+s);
+	    if(!s.equals("")) {
+        String[] allData = s.split(",");
+        for(int i=0;i<allData.length;i++) {
+        	 readAllFollowers.add(allData[i]);
+     	   System.out.println("followers "+allData[i]);
+        }
+	    }
+	} catch (IOException ex) {
+	    ex.printStackTrace();
+	}
+	
+	return readAllFollowers;
+	}
+	
+	public ArrayList<String> readFollowings(String username) {
+		ArrayList<String> readAllFollowings= new ArrayList<String>();
+		try {
+		    // create a reader
+		    FileInputStream fis = new FileInputStream(new File("./Resources/"+username+"/followings.twc"));
+		    
+		    // specify UTF_16 characer encoding
+		    // specify UTF_16 characer encoding
+		    InputStreamReader reader = new InputStreamReader(fis, StandardCharsets.US_ASCII);
+
+		    // read one byte at a time
+		    int ch;
+		    String s = "";
+		    while ((ch = reader.read()) != -1) {
+		    	 // System.out.print((char) ch);
+			      s=s+String.valueOf((char)ch); 
+		    }
+
+		    // close the reader
+		    reader.close();
+		    System.out.println("here is data "+s);
+		    if(!s.equals("")) {
+	        String[] allData = s.split(",");
+	        for(int i=0;i<allData.length;i++) {
+	        	 readAllFollowings.add(allData[i]);
+	     	   System.out.println("followers "+allData[i]);
+	        }
+		    }
 
 		} catch (IOException ex) {
 		    ex.printStackTrace();
 		}
 		
-		return null;
+		
+		return readAllFollowings;
 	}
+	
+	
+	
+	
+	
 	
 	public ArrayList<TweetsDataHolder> getTweetsData(String username){
 	    ArrayList<TweetsDataHolder> getAllTweets = new ArrayList<TweetsDataHolder>();
@@ -140,13 +232,14 @@ public class binaryDataStore {
 	}
 	
 	
-	public void createTweets(String username,String content,String Time, ArrayList<String> hashList) {
-		
+	public void createTweets(String username,String content,String Time, ArrayList<String> hashList,ArrayList<String> Mentions) {
+		ArrayList<UserDataClass> userData = Main.UserDataHolder;
 		try {
 		    // create a writer
 		    FileOutputStream fos = new FileOutputStream(new File("./Resources/"+username+"/tweets.twc"),true);
 	
 	        DataOutputStream dout=new DataOutputStream(fos);
+	        dout.write("\n".getBytes());
 		    username= username+",";
 		    content=content+",";
 		    Time=Time+",";
@@ -162,7 +255,25 @@ public class binaryDataStore {
 		    	  dout.write(val.getBytes());
 		    }
 		    
-		    dout.write("\n".getBytes());
+		    
+		 //   dout.write("".getBytes());
+		    
+		    for(int i=0;i<userData.size();i++) {
+		    	  for(int j=0;j<Mentions.size();j++) {
+				    	if(userData.get(i).equals(Mentions.get(j))) {
+				    		
+				    	}
+				    	String val= Mentions.get(i)+",";
+				    
+				    	//  dout.write(val.getBytes());
+				    }
+		    }
+		    
+		  
+		    
+		    
+		    
+		   
 		    
 		    
 		  

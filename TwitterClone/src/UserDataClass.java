@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class UserDataClass {
 	private String name;
@@ -8,16 +9,20 @@ public class UserDataClass {
 	private int age;
 	private boolean Accountstatus;
 	private String photoAdd;
-	public UserDataClass(String name,String Username,String gender,String pass,String EntryDate,int age,boolean Accountstatus,String photoAdd) {
+	private ArrayList<String> followings;
+	private ArrayList<String> follwers;
+	public UserDataClass(String name,String Username,String gender,String pass,String EntryDate,int age,boolean Accountstatus,String photoAdd,ArrayList<String> followings,ArrayList<String> follwers) {
 		 this.setAccountstatus(Accountstatus);
 		 this.setAge(age);
 		 this.setEntryData(EntryDate);
 		 this.setGender(gender);
-		this.setName(Username);
+	
 		this.setPass(pass);
 		this.setPhotoAdd(photoAdd);
 		this.setUsername(Username);
-		this.setUsername(Username);
+	    
+		 this.setFollwers(follwers);
+		 this.setFollowings(followings);
 	
 	}
 	public String getName() {
@@ -67,6 +72,18 @@ public class UserDataClass {
 	}
 	public void setPhotoAdd(String photoAdd) {
 		this.photoAdd = photoAdd;
+	}
+	public ArrayList<String> getFollowings() {
+		return followings;
+	}
+	public void setFollowings(ArrayList<String> followings) {
+		this.followings = followings;
+	}
+	public ArrayList<String> getFollwers() {
+		return follwers;
+	}
+	public void setFollwers(ArrayList<String> follwers) {
+		this.follwers = follwers;
 	}
 
 }

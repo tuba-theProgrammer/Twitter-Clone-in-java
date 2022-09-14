@@ -137,7 +137,7 @@ public class SignUpScreen extends JFrame {
 						 }
 					 }
 					 if(checkState==false) {
-						 UserDataHolder.add(new UserDataClass(nameField.getText(),userNameField.getText(),GenderField.getText(),PassField.getText(),timestamp.toString(), Integer.parseInt(ageField.getText()),true,"./imgpath"));
+						 UserDataHolder.add(new UserDataClass(nameField.getText(),userNameField.getText(),GenderField.getText(),PassField.getText(),timestamp.toString(), Integer.parseInt(ageField.getText()),true,"./imgpath",null,null));
                          binaryDataStore bn= new  binaryDataStore();
                          bn.WriteUserData(nameField.getText(),userNameField.getText(),GenderField.getText(),PassField.getText(),timestamp.toString(), Integer.parseInt(ageField.getText()),true,"./imgpath");
                          // show msg data added successfully

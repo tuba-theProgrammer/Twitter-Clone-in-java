@@ -156,6 +156,7 @@ public class createTweet extends JFrame {
 		setPanel.add(lblAddHashtags);
 		
 		ArrayList<String> hashTagData = new ArrayList<String>();
+		ArrayList<String> Mentions = new ArrayList<String>();
 		
 		JButton addHashTagBtn = new JButton("Add HashTag");
 		addHashTagBtn.addActionListener(new ActionListener() {
@@ -187,7 +188,19 @@ public class createTweet extends JFrame {
 				if(creatTweetBox.getText().equals("")) {
 					// show error msg
 				}else {
-					bn.createTweets(username,creatTweetBox.getText(),timestamp.toString(),hashTagData);
+					String test = creatTweetBox.getText();
+					String[] words = test.split(" ");
+
+					for (String word : words) { 
+						  if(word.indexOf('@')!= -1) {
+							  System.out.println("mention word :"+word);		 
+							  System.out.println("taged persons "+word.substring(word.lastIndexOf("@") + 1));
+							  Mentions.add(word.substring(word.lastIndexOf("@") + 1));
+						  }
+						
+						}
+					
+					bn.createTweets(username,creatTweetBox.getText(),timestamp.toString(),hashTagData,Mentions);
 					creatTweetBox.setText("");
 				}
 			
