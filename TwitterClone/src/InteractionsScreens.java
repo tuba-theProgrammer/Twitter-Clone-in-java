@@ -5,11 +5,16 @@ import java.awt.Font;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
 
 public class InteractionsScreens extends JFrame {
 
@@ -113,7 +118,63 @@ public class InteractionsScreens extends JFrame {
 		panel.add(btnCloseSessions);
 		
 		Panel setPanel = new Panel();
-		setPanel.setBounds(291, -14, 689, 615);
+		setPanel.setBounds(1, -12, 979, 613);
 		contentPane.add(setPanel);
-	}
-}
+		setPanel.setLayout(null);
+		  JLabel lblNewLabel = new JLabel("Display All Mention Tweets");
+			lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 20));
+			lblNewLabel.setBounds(193, 26, 342, 45);
+			setPanel.add(lblNewLabel);
+		
+			  JLabel tdLb;
+			  JLabel usernameLb;
+			  JLabel tweetTimeLb;
+			  JSeparator separator;
+		  
+		  binaryDataStore bn = new binaryDataStore();
+		  ArrayList<TweetsDataHolder> tweetData =    bn.getMentionsTweets(username);
+		  if(tweetData.size()==0) {
+			   tdLb = new JLabel("Not Mentiones in any Tweets");
+				tdLb.setBounds(12,  150, 665, 74);
+				setPanel.add(tdLb);
+		  }else {
+		
+		  
+			int x1= 140;
+			int x2= 110;
+			int x3 = 110; 
+			int x4 = 220;
+		  
+		  for(int i=tweetData.size()-1;i>=0;i--) {
+			  
+			 
+			    tdLb = new JLabel(tweetData.get(i).getContent());
+				tdLb.setBounds(12,  x1, 665, 74);
+				setPanel.add(tdLb);
+				
+				usernameLb = new JLabel(tweetData.get(i).getUsername());
+				usernameLb.setBounds(12, x2, 114, 15);
+				setPanel.add(usernameLb);
+				
+				tweetTimeLb = new JLabel(tweetData.get(i).getCreatetime());
+				tweetTimeLb.setBounds(528, x3, 126, 20);
+				setPanel.add(tweetTimeLb);
+				
+				separator = new JSeparator();
+				separator.setBounds(22, x4, 655, 2);
+				setPanel.add(separator);
+			  
+				 x1+=150;
+				   x2+=150;
+				   x3+=150;
+				   x4+=150;
+		  }
+		  
+		  }
+		  
+		  JScrollPane scrollPane = new JScrollPane(setPanel);
+		    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	       scrollPane.setBounds(291, -14,980, 600);
+	        contentPane.add(scrollPane);
+
+	}}

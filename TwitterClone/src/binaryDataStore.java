@@ -238,6 +238,7 @@ public class binaryDataStore {
 	
 	
 	public ArrayList<TweetsDataHolder> getMentionsTweets(String username) {
+		 
 		 ArrayList<TweetsDataHolder> getMentionTweets = new ArrayList<TweetsDataHolder>();
 			try {
 			    
@@ -341,7 +342,7 @@ public class binaryDataStore {
 				    	}
 				    	
 				    
-				    	//  dout.write(val.getBytes());
+			
 				    }
 		    }
 		    

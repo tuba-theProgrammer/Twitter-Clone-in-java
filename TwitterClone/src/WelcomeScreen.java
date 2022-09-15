@@ -59,7 +59,7 @@ public class WelcomeScreen extends JFrame {
 	         //defining a method actionPerformed
 	        public void actionPerformed(ActionEvent ae){ 
 	        //	new SignInScreen();
-	        	new TimelineScreen("tuba");
+	        	new TimelineScreen("nashrah123");
 	        	
 	        }});
 		
