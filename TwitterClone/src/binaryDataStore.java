@@ -200,7 +200,11 @@ public class binaryDataStore {
 		    	   String[] res = line.split("[,]", 0);
 		    	   ArrayList<String> hashList = new ArrayList<String>();
 		    	   ArrayList<String> mentions = new ArrayList<String>();
-		    	  
+		    	   
+		    	   if(res[0].equals("Mentions")) {
+		    		  
+		    	   }else {
+		    	   
 		    	   for(int i=3;i<res.length;i++) {
 		    		   if(res[i].charAt(0)=='#') {
 		    			   hashList.add(res[i]); 
@@ -209,12 +213,13 @@ public class binaryDataStore {
 		    		   }
 		            	 
 		              }
-		         
+		             
 		              getAllTweets.add(new TweetsDataHolder(res[0],res[1],res[2],hashList,mentions));
-		          
+		    	   }
 		    	line = bufReader.readLine();
 		    	
-		    	} 
+		    	
+		    }
 		    
 		    
 		    bufReader.close();
@@ -230,6 +235,61 @@ public class binaryDataStore {
 		
 		return getAllTweets;
 	}
+	
+	
+	public ArrayList<TweetsDataHolder> getMentionsTweets(String username) {
+		 ArrayList<TweetsDataHolder> getMentionTweets = new ArrayList<TweetsDataHolder>();
+			try {
+			    
+			    BufferedReader bufReader = new BufferedReader(new FileReader("./Resources/"+username+"/tweets.twc"));
+			    String line = bufReader.readLine();
+			    
+			
+			    
+			    while (line != null) { 
+			    	   String[] res = line.split("[,]", 0);
+			    	   ArrayList<String> hashList = new ArrayList<String>();
+			    	   ArrayList<String> mentions = new ArrayList<String>();
+			    	   
+			    	   if(res[0].equals("Mentions")) {
+			    		   for(int i=4;i<res.length;i++) {
+				    		   if(res[i].charAt(0)=='#') {
+				    			   hashList.add(res[i]); 
+				    		   }else  if(res[i].charAt(0)=='@'){
+				    			   mentions.add(res[i]);
+				    		   }
+				            	 
+				              }
+				             
+				              getMentionTweets.add(new TweetsDataHolder(res[1],res[2],res[3],hashList,mentions));
+				    	   
+			    	   }else {
+			    	   
+			    	   }
+			    	line = bufReader.readLine();
+			    	
+			    	
+			    }
+			    
+			    
+			    bufReader.close();
+
+			 
+
+			} catch (IOException ex) {
+			    ex.printStackTrace();
+			}
+			
+			
+			
+			
+			return getMentionTweets;
+
+		
+	}
+	
+	
+	
 	
 	
 	public void createTweets(String username,String content,String Time, ArrayList<String> hashList,ArrayList<String> Mentions) {
@@ -258,12 +318,28 @@ public class binaryDataStore {
 		    
 		 //   dout.write("".getBytes());
 		    
-		    for(int i=0;i<userData.size();i++) {
-		    	  for(int j=0;j<Mentions.size();j++) {
-				    	if(userData.get(i).equals(Mentions.get(j))) {
-				    		
+		    for(int i=0;i<Mentions.size();i++) {
+		    	  for(int j=0;j<userData.size();j++) {
+				    	if(userData.get(j).getUsername().equals(Mentions.get(i))) {
+				    		 if(userData.get(j).getUsername().equals(username)) {
+				    			 
+				    		 }else {
+				    			 fos = new FileOutputStream(new File("./Resources/"+userData.get(j).getUsername()+"/tweets.twc"),true);
+				    				
+				    		        dout=new DataOutputStream(fos);
+				    		        dout.write("\n".getBytes());
+				    		        dout.write("Mentions,".getBytes());
+				    		        dout.write(username.getBytes());
+				    			    dout.write(content.getBytes());
+				    			    dout.write(Time.getBytes());
+				    			    
+				    			    for(int k=0;k<hashList.size();k++) {
+				    			    	String val= hashList.get(i)+",";
+				    			    	  dout.write(val.getBytes());
+				    			    }
+				    		 }
 				    	}
-				    	String val= Mentions.get(i)+",";
+				    	
 				    
 				    	//  dout.write(val.getBytes());
 				    }
