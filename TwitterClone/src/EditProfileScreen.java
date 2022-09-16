@@ -5,11 +5,15 @@ import java.awt.Font;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JSeparator;
 
 public class EditProfileScreen extends JFrame {
 
@@ -17,6 +21,8 @@ public class EditProfileScreen extends JFrame {
 	private final JPanel panel = new JPanel();
 
 	String username;
+	private JTextField searchPeopleBox;
+	private JTextField searchUsernameBox;
 
 	/**
 	 * Create the frame.
@@ -114,5 +120,98 @@ public class EditProfileScreen extends JFrame {
 		
 		Panel setPanel = new Panel();
 		setPanel.setBounds(291, -14, 689, 615);
-		contentPane.add(setPanel);	}
+		contentPane.add(setPanel);	
+		setPanel.setLayout(null);
+		
+		searchPeopleBox = new JTextField();
+		searchPeopleBox.setBounds(29, 77, 338, 30);
+		setPanel.add(searchPeopleBox);
+		searchPeopleBox.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Edit profile");
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 22));
+		lblNewLabel.setBounds(248, 12, 230, 30);
+		setPanel.add(lblNewLabel);
+		
+		JLabel lblEnterUsername = new JLabel("Search People:");
+		lblEnterUsername.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblEnterUsername.setBounds(29, 50, 230, 27);
+		setPanel.add(lblEnterUsername);
+		
+		JButton btnSearchPeople = new JButton("Search");
+		btnSearchPeople.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<UserDataClass> userData = Main.UserDataHolder;
+				ArrayList<UserDataClass> searchPassResult = new ArrayList<UserDataClass>();
+				if(!searchPeopleBox.getText().equals("")) {
+					for(int i =0;i<userData.size();i++) {
+						if(userData.get(i).getUsername().equals(searchPeopleBox.getText())||userData.get(i).getUsername().contains(searchPeopleBox.getText())) {
+							searchPassResult.add(userData.get(i));
+							
+						}
+					}
+					
+					new searchPeople(searchPassResult,username);
+				}
+				else {
+					// show msg
+				}
+				
+				
+			}
+		});
+		btnSearchPeople.setForeground(new Color(255, 255, 255));
+		btnSearchPeople.setBackground(new Color(30, 144, 255));
+		btnSearchPeople.setBounds(394, 79, 117, 25);
+		setPanel.add(btnSearchPeople);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(29, 124, 648, 9);
+		setPanel.add(separator);
+		
+		JLabel lblSearchUsername = new JLabel("Search Username:");
+		lblSearchUsername.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblSearchUsername.setBounds(29, 145, 230, 27);
+		setPanel.add(lblSearchUsername);
+		
+		searchUsernameBox = new JTextField();
+		searchUsernameBox.setColumns(10);
+		searchUsernameBox.setBounds(29, 173, 338, 30);
+		setPanel.add(searchUsernameBox);
+		
+		JButton btnSearchUsername = new JButton("Search");
+		btnSearchUsername.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnSearchUsername.setForeground(Color.WHITE);
+		btnSearchUsername.setBackground(new Color(30, 144, 255));
+		btnSearchUsername.setBounds(394, 175, 117, 25);
+		setPanel.add(btnSearchUsername);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(29, 215, 648, 9);
+		setPanel.add(separator_1);
+		
+		JButton followersShowbtn = new JButton("List Of Followers");
+		followersShowbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		followersShowbtn.setForeground(new Color(255, 255, 255));
+		followersShowbtn.setBackground(new Color(0, 0, 139));
+		followersShowbtn.setFont(new Font("Dialog", Font.BOLD, 16));
+		followersShowbtn.setBounds(190, 264, 280, 44);
+		setPanel.add(followersShowbtn);
+		
+		JButton btnListOfFollowings = new JButton("List Of Followings");
+		btnListOfFollowings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnListOfFollowings.setForeground(Color.WHITE);
+		btnListOfFollowings.setFont(new Font("Dialog", Font.BOLD, 16));
+		btnListOfFollowings.setBackground(new Color(0, 0, 139));
+		btnListOfFollowings.setBounds(190, 340, 280, 44);
+		setPanel.add(btnListOfFollowings);}
 }

@@ -71,6 +71,10 @@ public class binaryDataStore {
 	}
 	
 	
+	
+	
+	
+	
 	public  ArrayList<UserDataClass> readUserDataFromFile() {
 		
 		 ArrayList<UserDataClass> getUserData= new  ArrayList<UserDataClass>();
@@ -144,6 +148,50 @@ public class binaryDataStore {
 	
 	return readAllFollowers;
 	}
+	
+	
+	public void WriteFollowers(String username,String followerName) {
+		try {
+		    // create a writer
+		    FileOutputStream fos = new FileOutputStream(new File("./Resources/"+username+"/followers"),true);
+	
+	        DataOutputStream dout=new DataOutputStream(fos);
+	     
+	        dout.write(followerName.getBytes());
+		    dout.write("\n".getBytes());
+		
+		    
+		    fos.close();
+		
+		} catch (IOException ex) {
+		    ex.printStackTrace();
+		}
+	}
+	
+	
+	public void WriteFollowings(String username,String followingName) {
+		try {
+			followingName +=",";
+		    // create a writer
+		    FileOutputStream fos = new FileOutputStream(new File("./Resources/"+username+"/followers"),true);
+	
+	        DataOutputStream dout=new DataOutputStream(fos);
+	     
+	        dout.write(followingName.getBytes());
+	        dout.write("true".getBytes());
+		    dout.write("\n".getBytes());
+		
+		    
+		    fos.close();
+		
+		} catch (IOException ex) {
+		    ex.printStackTrace();
+		}
+	}
+	
+
+	
+	
 	
 	public ArrayList<String> readFollowings(String username) {
 		ArrayList<String> readAllFollowings= new ArrayList<String>();
@@ -363,6 +411,10 @@ public class binaryDataStore {
 
 		
 	}
+	
+	
+	
+	
 	
 	
 	
