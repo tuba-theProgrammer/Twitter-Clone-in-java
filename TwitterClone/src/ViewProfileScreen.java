@@ -122,13 +122,29 @@ public class ViewProfileScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource().toString().equals("following")) {
 					
-					btnFollowing.setText("Follow");
-					
-					allData.get(userIndex).getFollowings().remove(followingIndex);
+					btnFollowing.setText("Follow");		
+					allData.get(userIndex).getFollowings().get(followingIndex).setStatus(false);
 					
 				}else if(e.getSource().toString().equals("Follow")) {
 					btnFollowing.setText("following");
-					allData.get(userIndex).getFollowings().add(userData.getUsername());
+					boolean checkStatus=false;
+					for(int i=0;i<allData.get(userIndex).getFollowings().size();i++) {
+						if(allData.get(userIndex).getFollowings().get(i).getName().equals(userData.getUsername())) {
+							checkStatus= true;
+							
+						}else {
+							checkStatus= false;
+							
+						}
+					}
+					
+					if(checkStatus) {
+						allData.get(userIndex).getFollowings().get(followingIndex).setStatus(true);
+					}else {
+						allData.get(userIndex).getFollowings().add(new followingClass(userData.getUsername(),true));
+					}
+					
+				
 				}
 			}
 		});
@@ -158,6 +174,25 @@ public class ViewProfileScreen extends JFrame {
 				}else if(e.getSource().toString().equals("Remove")) {
 					btnFollowing.setText("not a follower");
 					allData.get(userIndex).getFollowings().remove(followerIndex);
+					
+					
+					boolean checkStatus=false;
+					for(int i=0;i<allData.get(userIndex).getFollwers().size();i++) {
+						if(allData.get(userIndex).getFollwers().get(i).getName().equals(userData.getUsername())) {
+							checkStatus= true;
+							
+						}else {
+							checkStatus= false;
+							
+						}
+					}
+					
+					if(checkStatus) {
+						allData.get(userIndex).getFollwers().get(followerIndex).setStatus(true);
+					}else {
+						allData.get(userIndex).getFollwers().add(new followerClass(userData.getUsername(),true));
+					}
+					
 					
 				}
 			}

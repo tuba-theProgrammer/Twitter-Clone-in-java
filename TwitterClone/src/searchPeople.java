@@ -30,7 +30,7 @@ public class searchPeople extends JFrame {
 		this.searchPassResult = searchPassResult;
 		setTitle("Search Result");
 		setBackground(new Color(128, 128, 128));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 		setBounds(100, 100, 768, 533);
 		contentPane = new JPanel();

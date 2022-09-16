@@ -9,9 +9,9 @@ public class UserDataClass {
 	private int age;
 	private boolean Accountstatus;
 	private String photoAdd;
-	private ArrayList<String> followings;
-	private ArrayList<String> follwers;
-	public UserDataClass(String name,String Username,String gender,String pass,String EntryDate,int age,boolean Accountstatus,String photoAdd,ArrayList<String> followings,ArrayList<String> follwers) {
+	private ArrayList<followingClass> followings;
+	private ArrayList<followerClass> follwers;
+	public UserDataClass(String name,String Username,String gender,String pass,String EntryDate,int age,boolean Accountstatus,String photoAdd,ArrayList<followingClass> followings,ArrayList<followerClass> follwers) {
 		 this.setAccountstatus(Accountstatus);
 		 this.setAge(age);
 		 this.setEntryData(EntryDate);
@@ -73,16 +73,16 @@ public class UserDataClass {
 	public void setPhotoAdd(String photoAdd) {
 		this.photoAdd = photoAdd;
 	}
-	public ArrayList<String> getFollowings() {
+	public ArrayList<followingClass>  getFollowings() {
 		return followings;
 	}
-	public void setFollowings(ArrayList<String> followings) {
+	public void setFollowings(ArrayList<followingClass> followings) {
 		this.followings = followings;
 	}
-	public ArrayList<String> getFollwers() {
+	public ArrayList<followerClass> getFollwers() {
 		return follwers;
 	}
-	public void setFollwers(ArrayList<String> follwers) {
+	public void setFollwers(ArrayList<followerClass> follwers) {
 		this.follwers = follwers;
 	}
 

@@ -87,7 +87,6 @@ public class ViewTweets extends JFrame {
 	       scrollPane.setBounds(291, -14,980, 600);
 	        contentPane.add(scrollPane);
 
-		contentPane.add(setPanel);
 	}
 
 }

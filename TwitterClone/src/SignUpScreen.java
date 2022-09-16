@@ -39,10 +39,6 @@ public class SignUpScreen extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel imgLabel = new JLabel("imgLabel");
-		imgLabel.setBounds(388, 88, 70, 43);
-		contentPane.add(imgLabel);
-		
 		JLabel lblCreateAccount = new JLabel("Create Account");
 		lblCreateAccount.setForeground(new Color(255, 255, 255));
 		lblCreateAccount.setFont(new Font("Dialog", Font.BOLD, 20));
@@ -174,17 +170,5 @@ public class SignUpScreen extends JFrame {
 		btnBack.setBackground(new Color(25, 25, 112));
 		btnBack.setBounds(367, 587, 144, 34);
 		contentPane.add(btnBack);
-		
-		JButton btnUploadProfile = new JButton("Upload Profile");
-		btnUploadProfile.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			   
-			}
-		});
-		btnUploadProfile.setForeground(new Color(25, 25, 112));
-		btnUploadProfile.setFont(new Font("Dialog", Font.BOLD, 16));
-		btnUploadProfile.setBackground(new Color(30, 144, 255));
-		btnUploadProfile.setBounds(687, 54, 144, 34);
-		contentPane.add(btnUploadProfile);
 	}
 }

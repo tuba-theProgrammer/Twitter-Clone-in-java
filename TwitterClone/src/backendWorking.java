@@ -4,39 +4,29 @@ public class backendWorking {
 	public static ArrayList<UserDataClass> getUsersData()
 	{  
 		//Creating array for User data
-				ArrayList<UserDataClass> userDataHolders = new ArrayList<UserDataClass>();
-				binaryDataStore bn= new binaryDataStore();
-				userDataHolders =bn.readUserDataFromFile();
-				for(int i=0;i<userDataHolders.size();i++) {
-					System.out.println(userDataHolders.get(i));
-				}
+		binaryDataStore bn= new binaryDataStore();
+				ArrayList<UserDataClass> userDataHolders = bn.readUserDataFromFile();
+			
 				
 		return userDataHolders;
 	}
 	
-	public static ArrayList<UserDataClass> getUserFollowers(String username)
-	{  
+	public static ArrayList<followingClass> getUserFollowing(String username)
+	{  	binaryDataStore bn= new binaryDataStore();
 		//Creating array for User data
-				ArrayList<UserDataClass> userDataHolders = new ArrayList<UserDataClass>();
-				for(int i=0;i<userDataHolders.size();i++) {
-				
-				}
-				
-				binaryDataStore bn= new binaryDataStore();
-				bn.readUserDataFromFile();
-				
-		return userDataHolders;
+				ArrayList<followingClass> following = bn.readFollowings(username);
+					
+		return following;
 	}
 	
 	
-	public static ArrayList<UserDataClass> getUserFollowings()
+	public static ArrayList<followerClass> getUserFollower(String username)
 	{  
-		//Creating array for User data
-				ArrayList<UserDataClass> userDataHolders = new ArrayList<UserDataClass>();
-				binaryDataStore bn= new binaryDataStore();
-				bn.readUserDataFromFile();
-				
-		return userDataHolders;
+	 	binaryDataStore bn= new binaryDataStore();
+			//Creating array for User data
+	 	 ArrayList<followerClass> follower= bn.readFollowers(username);
+						
+			return follower;
 	}
 	
 	

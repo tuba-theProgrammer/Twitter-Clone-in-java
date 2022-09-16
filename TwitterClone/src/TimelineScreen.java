@@ -31,7 +31,7 @@ public class TimelineScreen extends JFrame {
 		setVisible(true);
 		setBackground(new Color(128, 128, 128));
 		setTitle("TimeLine");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 980, 638);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -112,8 +112,9 @@ public class TimelineScreen extends JFrame {
 		JButton btnCloseSessions = new JButton("Close Sessions");
 		btnCloseSessions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CloseSessionsScreen(username);
+			
 				dispose();
+				new WelcomeScreen();
 			}
 			
 		});
@@ -125,7 +126,7 @@ public class TimelineScreen extends JFrame {
 		
 		Panel setPanel = new Panel();
 		setPanel.setBounds(291, -14, 689, 615);
-		contentPane.add(setPanel);
+		
 		setPanel.setLayout(null);
 		
 		  JLabel lblNewLabel = new JLabel("Display All Tweets");
@@ -133,17 +134,9 @@ public class TimelineScreen extends JFrame {
 			lblNewLabel.setBounds(193, 12, 342, 45);
 			setPanel.add(lblNewLabel);
 		
-		
-			
-			
-			
-			
-			
-		 
-		  
 		  
 		  binaryDataStore bn = new binaryDataStore();
-		  ArrayList<TweetsDataHolder> tweetData =    bn.getTweetsData("tuba");
+		  ArrayList<TweetsDataHolder> tweetData =    bn.getTweetsData(username);
 		  JLabel tdLb;
 		  JLabel usernameLb;
 		  JLabel tweetTimeLb;

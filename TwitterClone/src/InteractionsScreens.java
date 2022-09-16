@@ -31,7 +31,7 @@ public class InteractionsScreens extends JFrame {
 		setVisible(true);
 		setBackground(new Color(128, 128, 128));
 		setTitle("TimeLine");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 980, 638);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,6 +61,7 @@ public class InteractionsScreens extends JFrame {
 		btnTweetSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new createTweet(username);
+				dispose();
 			}
 		});
 		btnTweetSend.setForeground(Color.WHITE);
@@ -73,6 +74,7 @@ public class InteractionsScreens extends JFrame {
 		btnInteration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new InteractionsScreens(username);
+				dispose();
 			}
 		});
 		btnInteration.setForeground(Color.WHITE);
@@ -85,6 +87,7 @@ public class InteractionsScreens extends JFrame {
 		btnEditProfile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new EditProfileScreen(username);
+				dispose();
 			}
 		});
 		btnEditProfile.setForeground(Color.WHITE);
@@ -97,6 +100,7 @@ public class InteractionsScreens extends JFrame {
 		btnSearchHashtags.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new SeachHashTagScreen(username);
+				dispose();
 			}
 		});
 		btnSearchHashtags.setForeground(Color.WHITE);
@@ -108,7 +112,8 @@ public class InteractionsScreens extends JFrame {
 		JButton btnCloseSessions = new JButton("Close Sessions");
 		btnCloseSessions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CloseSessionsScreen(username);
+				dispose();
+				new WelcomeScreen();
 			}
 		});
 		btnCloseSessions.setForeground(Color.WHITE);

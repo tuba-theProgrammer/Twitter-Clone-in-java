@@ -94,8 +94,8 @@ public class binaryDataStore {
 		      if((char)ch=='\n') {
 		    	 
 		    	  String[] allData = s.split(",");
-		    	  ArrayList<String> follwersList = readFollowers(allData[1]);
-		    	  ArrayList<String> followingList =readFollowings(allData[1]);
+		    	  ArrayList<followerClass> follwersList = readFollowers(allData[1]);
+		    	  ArrayList<followingClass> followingList =readFollowings(allData[1]);
 		    	 
 		    	  getUserData.add(new UserDataClass(allData[0],allData[1],allData[2],allData[3],allData[4],Integer.parseInt(allData[5]),new Boolean(allData[6]),allData[7],followingList,follwersList));
 		          
@@ -115,49 +115,69 @@ public class binaryDataStore {
 	
 	
 	
-	public  ArrayList<String>  readFollowers(String username) {
-		ArrayList<String> readAllFollowers= new ArrayList<String>();
-		try {
-	    // create a reader
-	    FileInputStream fis = new FileInputStream(new File("./Resources/"+username+"/followers.twc"));
-	    
-	    // specify UTF_16 characer encoding
-	    InputStreamReader reader = new InputStreamReader(fis, StandardCharsets.US_ASCII);
+	public  ArrayList<followerClass>  readFollowers(String username) {
 
-	    // read one byte at a time
-	    int ch;
-	    String s = "";
-	    while ((ch = reader.read()) != -1) {
-	    	 // System.out.print((char) ch);
-		      s=s+String.valueOf((char)ch); 
-	    }
+		ArrayList<UserDataClass> userData =Main.UserDataHolder;
+		int index=0;
+		
+		ArrayList<followerClass> follower= new ArrayList<followerClass>();
+		
+          try {
+		    
+		    BufferedReader bufReader = new BufferedReader(new FileReader("./Resources/"+username+"/followings.twc"));
+		    String line = bufReader.readLine();
+		    
+		    if(userData!=null) {
+		    for(int i=0;i<userData.size();i++) {
+		    	if(userData.get(i).equals(username)) {
+		    		index=i;
+		    	}
+		    }
+		    }
+		
+		    
+		    while (line != null) { 
+		    	   String[] res = line.split("[,]", 0);
+		    	      
+		    	   follower.add(new followerClass(res[0],new Boolean(res[1])));
+		    	   }
+		    	line = bufReader.readLine();
+          
+		    	
+		    
+		    
+		    
+		    bufReader.close();
 
-	    // close the reader
-	    reader.close();
-	    System.out.println("here is data "+s);
-	    if(!s.equals("")) {
-        String[] allData = s.split(",");
-        for(int i=0;i<allData.length;i++) {
-        	 readAllFollowers.add(allData[i]);
-     	   System.out.println("followers "+allData[i]);
-        }
-	    }
-	} catch (IOException ex) {
-	    ex.printStackTrace();
-	}
-	
-	return readAllFollowers;
+		 
+
+		} catch (IOException ex) {
+		    ex.printStackTrace();
+		}
+		
+		
+		
+		
+
+		
+		
+		
+		
+		return follower;
+
 	}
 	
 	
 	public void WriteFollowers(String username,String followerName) {
 		try {
+			followerName+=",";
 		    // create a writer
 		    FileOutputStream fos = new FileOutputStream(new File("./Resources/"+username+"/followers"),true);
 	
 	        DataOutputStream dout=new DataOutputStream(fos);
 	     
 	        dout.write(followerName.getBytes());
+	        dout.write("true".getBytes());
 		    dout.write("\n".getBytes());
 		
 		    
@@ -193,41 +213,56 @@ public class binaryDataStore {
 	
 	
 	
-	public ArrayList<String> readFollowings(String username) {
-		ArrayList<String> readAllFollowings= new ArrayList<String>();
-		try {
-		    // create a reader
-		    FileInputStream fis = new FileInputStream(new File("./Resources/"+username+"/followings.twc"));
+	public ArrayList<followingClass> readFollowings(String username) {
+
+		
+		ArrayList<UserDataClass> userData =Main.UserDataHolder;
+		int index=0;
+		
+		ArrayList<followingClass> following= new ArrayList<followingClass>();
+		
+          try {
 		    
-		    // specify UTF_16 characer encoding
-		    // specify UTF_16 characer encoding
-		    InputStreamReader reader = new InputStreamReader(fis, StandardCharsets.US_ASCII);
-
-		    // read one byte at a time
-		    int ch;
-		    String s = "";
-		    while ((ch = reader.read()) != -1) {
-		    	 // System.out.print((char) ch);
-			      s=s+String.valueOf((char)ch); 
+		    BufferedReader bufReader = new BufferedReader(new FileReader("./Resources/"+username+"/followings.twc"));
+		    String line = bufReader.readLine();
+		    if(userData!=null) {
+		    for(int i=0;i<userData.size();i++) {
+		    	if(userData.get(i).equals(username)) {
+		    		index=i;
+		    	}
 		    }
-
-		    // close the reader
-		    reader.close();
-		    System.out.println("here is data "+s);
-		    if(!s.equals("")) {
-	        String[] allData = s.split(",");
-	        for(int i=0;i<allData.length;i++) {
-	        	 readAllFollowings.add(allData[i]);
-	     	   System.out.println("followers "+allData[i]);
-	        }
 		    }
+		
+		    
+		    while (line != null) { 
+		    	   String[] res = line.split("[,]", 0);
+		    	      
+		    	   following.add(new followingClass(res[0],new Boolean(res[1])));
+		    	   }
+		    	line = bufReader.readLine();
+          
+		    	
+		    
+		    
+		    
+		    bufReader.close();
+
+		 
 
 		} catch (IOException ex) {
 		    ex.printStackTrace();
 		}
 		
 		
-		return readAllFollowings;
+		
+		
+
+		
+		
+		
+		
+		return following;
+		
 	}
 	
 	
@@ -244,7 +279,7 @@ public class binaryDataStore {
 		    
 		
 		    
-		    while (line != null) { 
+		    while (line != null&&line!="\n") { 
 		    	   String[] res = line.split("[,]", 0);
 		    	   ArrayList<String> hashList = new ArrayList<String>();
 		    	   ArrayList<String> mentions = new ArrayList<String>();
@@ -342,17 +377,16 @@ public class binaryDataStore {
 	
 	
 	public void createTweets(String username,String content,String Time, ArrayList<String> hashList,ArrayList<String> Mentions) {
-		ArrayList<UserDataClass> userData = Main.UserDataHolder;
+		ArrayList<UserDataClass> userData = readUserDataFromFile();
 		try {
 		    // create a writer
 		    FileOutputStream fos = new FileOutputStream(new File("./Resources/"+username+"/tweets.twc"),true);
 	
 	        DataOutputStream dout=new DataOutputStream(fos);
-	        dout.write("\n".getBytes());
 		    username= username+",";
 		    content=content+",";
 		    Time=Time+",";
-		   
+		    dout.write("\n".getBytes());
 		    
 		    // write data to file
 		    dout.write(username.getBytes());
@@ -376,12 +410,12 @@ public class binaryDataStore {
 				    			 fos = new FileOutputStream(new File("./Resources/"+userData.get(j).getUsername()+"/tweets.twc"),true);
 				    				
 				    		        dout=new DataOutputStream(fos);
-				    		        dout.write("\n".getBytes());
+				    		     
 				    		        dout.write("Mentions,".getBytes());
 				    		        dout.write(username.getBytes());
 				    			    dout.write(content.getBytes());
 				    			    dout.write(Time.getBytes());
-				    			    
+				    			    dout.write("\n".getBytes());
 				    			    for(int k=0;k<hashList.size();k++) {
 				    			    	String val= hashList.get(i)+",";
 				    			    	  dout.write(val.getBytes());

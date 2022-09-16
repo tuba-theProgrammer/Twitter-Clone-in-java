@@ -32,7 +32,7 @@ public class EditProfileScreen extends JFrame {
 		setVisible(true);
 		setBackground(new Color(128, 128, 128));
 		setTitle("TimeLine");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 980, 638);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -62,6 +62,7 @@ public class EditProfileScreen extends JFrame {
 		btnTweetSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new createTweet(username);
+				dispose();
 			}
 		});
 		btnTweetSend.setForeground(Color.WHITE);
@@ -74,6 +75,7 @@ public class EditProfileScreen extends JFrame {
 		btnInteration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new InteractionsScreens(username);
+				dispose();
 			}
 		});
 		btnInteration.setForeground(Color.WHITE);
@@ -86,6 +88,7 @@ public class EditProfileScreen extends JFrame {
 		btnEditProfile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new EditProfileScreen(username);
+				dispose();
 			}
 		});
 		btnEditProfile.setForeground(Color.WHITE);
@@ -98,6 +101,7 @@ public class EditProfileScreen extends JFrame {
 		btnSearchHashtags.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new SeachHashTagScreen(username);
+				dispose();
 			}
 		});
 		btnSearchHashtags.setForeground(Color.WHITE);
@@ -109,7 +113,9 @@ public class EditProfileScreen extends JFrame {
 		JButton btnCloseSessions = new JButton("Close Sessions");
 		btnCloseSessions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new CloseSessionsScreen(username);
+
+				dispose();
+				new WelcomeScreen();
 			}
 		});
 		btnCloseSessions.setForeground(Color.WHITE);
@@ -182,6 +188,26 @@ public class EditProfileScreen extends JFrame {
 		JButton btnSearchUsername = new JButton("Search");
 		btnSearchUsername.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ArrayList<UserDataClass> userData = Main.UserDataHolder;
+				if(searchUsernameBox.getText().equals("")) {
+					// show msg
+				}else {
+					boolean ischeck=false;
+					UserDataClass data= null;
+					for(int i=0;i<userData.size();i++) {
+						if(userData.get(i).getUsername().equals(searchUsernameBox.getText())) {
+							ischeck=true;
+							data = userData.get(i);
+						}else {
+							ischeck=false;
+						}
+					}
+					
+					if(ischeck) {
+						new ViewProfileScreen(data,username);
+					}
+				}
+				
 			}
 		});
 		btnSearchUsername.setForeground(Color.WHITE);
@@ -196,6 +222,8 @@ public class EditProfileScreen extends JFrame {
 		JButton followersShowbtn = new JButton("List Of Followers");
 		followersShowbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				new showAllFollowers(username); 
 			}
 		});
 		followersShowbtn.setForeground(new Color(255, 255, 255));
@@ -207,11 +235,31 @@ public class EditProfileScreen extends JFrame {
 		JButton btnListOfFollowings = new JButton("List Of Followings");
 		btnListOfFollowings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				new showAllFollowings(username);
 			}
 		});
 		btnListOfFollowings.setForeground(Color.WHITE);
 		btnListOfFollowings.setFont(new Font("Dialog", Font.BOLD, 16));
 		btnListOfFollowings.setBackground(new Color(0, 0, 139));
 		btnListOfFollowings.setBounds(190, 340, 280, 44);
-		setPanel.add(btnListOfFollowings);}
+		setPanel.add(btnListOfFollowings);
+		
+		JButton btnDeactivateAccount = new JButton("Deactivate Account");
+		btnDeactivateAccount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ArrayList<UserDataClass> userData = Main.UserDataHolder;
+				for(int i=0;i<userData.size();i++) {
+					if(userData.get(i).getUsername().equals(username)) {
+						userData.get(i).setAccountstatus(false);
+					}
+				}
+				
+			}
+		});
+		btnDeactivateAccount.setForeground(Color.WHITE);
+		btnDeactivateAccount.setFont(new Font("Dialog", Font.BOLD, 16));
+		btnDeactivateAccount.setBackground(new Color(0, 0, 139));
+		btnDeactivateAccount.setBounds(190, 419, 280, 44);
+		setPanel.add(btnDeactivateAccount);}
 }
