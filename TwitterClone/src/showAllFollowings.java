@@ -34,21 +34,41 @@ public class showAllFollowings extends JFrame {
 		Panel panel = new Panel();
 		panel.setBounds(22, 10, 403, 543);
 		JLabel lblNewLabel;
-		ArrayList<followingClass> fl= backendWorking.getUserFollowing(username);
-		for(int i=0;i<fl.size();i++) {
-			 lblNewLabel = new JLabel(fl.get(i).getName());
+	
+		ArrayList<UserDataClass> data = Main.UserDataHolder;
+		
+		int userIndex=0;
+		for(int i=0;i<data.size();i++) {
+			if(data.get(i).getUsername().equals(username)) {
+				userIndex=i;
+			}
+		}
+		
+		if(data.get(userIndex).getFollowings().size()==0) {
+			 lblNewLabel = new JLabel("no followings");
 			 lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 18));
 				lblNewLabel.setBounds(27, 27, 228, 41);
 				panel.add(lblNewLabel);
+		}else {
+			int x=27;
+		for(int i=0;i<data.get(userIndex).getFollowings().size();i++) {
+			if(data.get(userIndex).getFollowings().get(i).isStatus()==true) {
+			 lblNewLabel = new JLabel(data.get(userIndex).getFollowings().get(i).getName());
+			 lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 18));
+				lblNewLabel.setBounds(27, x, 228, 41);
+				panel.add(lblNewLabel);
+				x+=50;
+			}
 		}
 		
 	
 		  
 		  JScrollPane scrollPane = new JScrollPane(panel);
 		    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	       scrollPane.setBounds(291, -14,980, 600);
+	       scrollPane.setBounds(22, 10, 403, 543);
 	        contentPane.add(scrollPane);
 		panel.setLayout(null);
+		}
 	}
 
 }

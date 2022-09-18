@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -22,6 +24,7 @@ public class SignInScreen extends JFrame {
 
 
 	public SignInScreen() {
+		JFrame jf= this;
 		setBackground(new Color(192, 192, 192));
 		setTitle("Login Screen");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -66,22 +69,44 @@ public class SignInScreen extends JFrame {
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(usernameField.getText().equals("")&&PassField.getText().equals("")) {
-					
+					 JOptionPane.showMessageDialog(jf,"plz enter data first in fields","ERROR",JOptionPane.ERROR_MESSAGE);
 					
 				}else {
 					ArrayList<UserDataClass> userData = Main.UserDataHolder;
 					boolean ischeck=false;
 					for(int i=0;i<userData.size();i++) {
+
 						if(userData.get(i).getUsername().equals(usernameField.getText())&&userData.get(i).getPass().equals(PassField.getText())&&userData.get(i).isAccountstatus()==true){
+						
 							ischeck=true;
 						
-						}else {
-							ischeck=false;
 						}
 					}
 					
-					if(ischeck) {
+					if(ischeck==true) {
+						binaryDataStore bn= new binaryDataStore();
+						bn.WriteAllFollowingAndFollowers(usernameField.getText());
+						ArrayList<followingClass> followingList = bn.readFollowings(usernameField.getText());
+					    ArrayList<followerClass> followerList = bn.readFollowers(usernameField.getText());
+						int userIndex=0;
+						for(int i=0;i<userData.size();i++) {
+							
+							if(userData.get(i).getUsername().equals(usernameField.getText())) {
+								userIndex= i;
+							
+							}
+						
+						}
+						
+						
+						userData.get(userIndex).setFollwers(followerList);
+						userData.get(userIndex).setFollowings(followingList);
+
+						
 						new TimelineScreen(usernameField.getText());
+						dispose();
+					}else {
+						 JOptionPane.showMessageDialog(jf,"No such user exists- plz enter correct username and pass","ERROR",JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				
@@ -98,6 +123,7 @@ public class SignInScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				new WelcomeScreen();
+				
 			}
 		});
 		btnBack.setForeground(new Color(30, 144, 255));

@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
@@ -31,6 +32,7 @@ public class createTweet extends JFrame {
 	 */
 	public createTweet(String username) {
 		this.username= username;
+		JFrame jf = this;
 		setVisible(true);
 		setBackground(new Color(128, 128, 128));
 		setTitle("TimeLine");
@@ -99,19 +101,6 @@ public class createTweet extends JFrame {
 		btnEditProfile.setBounds(0, 306, 280, 46);
 		panel.add(btnEditProfile);
 		
-		JButton btnSearchHashtags = new JButton("Search Hashtags");
-		btnSearchHashtags.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new SeachHashTagScreen(username);
-				dispose();
-			}
-		});
-		btnSearchHashtags.setForeground(Color.WHITE);
-		btnSearchHashtags.setFont(new Font("Dialog", Font.BOLD, 16));
-		btnSearchHashtags.setBackground(Color.GRAY);
-		btnSearchHashtags.setBounds(0, 363, 280, 46);
-		panel.add(btnSearchHashtags);
-		
 		JButton btnCloseSessions = new JButton("Close Sessions");
 		btnCloseSessions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -123,7 +112,7 @@ public class createTweet extends JFrame {
 		btnCloseSessions.setForeground(Color.WHITE);
 		btnCloseSessions.setFont(new Font("Dialog", Font.BOLD, 16));
 		btnCloseSessions.setBackground(Color.GRAY);
-		btnCloseSessions.setBounds(0, 418, 280, 46);
+		btnCloseSessions.setBounds(0, 364, 280, 46);
 		panel.add(btnCloseSessions);
 		
 		Panel setPanel = new Panel();
@@ -168,6 +157,7 @@ public class createTweet extends JFrame {
 					hashTagbox.setText("");
 				}else {
 					// show error msg
+					 JOptionPane.showMessageDialog(jf,"Enter HashTag value first","ERROR",JOptionPane.ERROR_MESSAGE);
 				}
 				
 				
@@ -188,6 +178,7 @@ public class createTweet extends JFrame {
 				binaryDataStore bn = new binaryDataStore();
 				if(creatTweetBox.getText().equals("")) {
 					// show error msg
+					 JOptionPane.showMessageDialog(jf,"Enter Tweet content first","ERROR",JOptionPane.ERROR_MESSAGE);
 				}else {
 					String test = creatTweetBox.getText();
 					String[] words = test.split(" ");

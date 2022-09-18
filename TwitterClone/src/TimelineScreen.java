@@ -96,19 +96,6 @@ public class TimelineScreen extends JFrame {
 		btnEditProfile.setBounds(0, 306, 280, 46);
 		panel.add(btnEditProfile);
 		
-		JButton btnSearchHashtags = new JButton("Search Hashtags");
-		btnSearchHashtags.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new SeachHashTagScreen(username);
-				dispose();
-			}
-		});
-		btnSearchHashtags.setForeground(Color.WHITE);
-		btnSearchHashtags.setFont(new Font("Dialog", Font.BOLD, 16));
-		btnSearchHashtags.setBackground(Color.GRAY);
-		btnSearchHashtags.setBounds(0, 363, 280, 46);
-		panel.add(btnSearchHashtags);
-		
 		JButton btnCloseSessions = new JButton("Close Sessions");
 		btnCloseSessions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -121,7 +108,7 @@ public class TimelineScreen extends JFrame {
 		btnCloseSessions.setForeground(Color.WHITE);
 		btnCloseSessions.setFont(new Font("Dialog", Font.BOLD, 16));
 		btnCloseSessions.setBackground(Color.GRAY);
-		btnCloseSessions.setBounds(0, 418, 280, 46);
+		btnCloseSessions.setBounds(0, 364, 280, 46);
 		panel.add(btnCloseSessions);
 		
 		Panel setPanel = new Panel();
@@ -176,7 +163,7 @@ public class TimelineScreen extends JFrame {
 		  
 		  JScrollPane scrollPane = new JScrollPane(setPanel);
 		    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	       scrollPane.setBounds(291, -14,980, 600);
+	       scrollPane.setBounds(291, -14, 689, 615);
 	        contentPane.add(scrollPane);
 		  
 	}

@@ -57,7 +57,7 @@ public class searchPeople extends JFrame {
 			panel.add(searchUsername);
 		}
 		else {
-			int x1 = 32,x2= 86,x3= 32;
+			int x1 = 50,x2= 100,x3= 50;
 	
 			for(int i=0;i<searchPassResult.size();i++) {
 				index=i;
@@ -94,7 +94,7 @@ public class searchPeople extends JFrame {
 			
 			  JScrollPane scrollPane = new JScrollPane(panel);
 			    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		        scrollPane.setBounds(291, -14,980, 400);
+		        scrollPane.setBounds(32, 52, 712, 420);
 		        contentPane.add(scrollPane);
 		}
 	}

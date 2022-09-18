@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 
 public class EditProfileScreen extends JFrame {
@@ -29,6 +30,7 @@ public class EditProfileScreen extends JFrame {
 	 */
 	public EditProfileScreen(String username) {
 		this.username = username;
+		JFrame jf = this;
 		setVisible(true);
 		setBackground(new Color(128, 128, 128));
 		setTitle("TimeLine");
@@ -97,19 +99,6 @@ public class EditProfileScreen extends JFrame {
 		btnEditProfile.setBounds(0, 306, 280, 46);
 		panel.add(btnEditProfile);
 		
-		JButton btnSearchHashtags = new JButton("Search Hashtags");
-		btnSearchHashtags.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new SeachHashTagScreen(username);
-				dispose();
-			}
-		});
-		btnSearchHashtags.setForeground(Color.WHITE);
-		btnSearchHashtags.setFont(new Font("Dialog", Font.BOLD, 16));
-		btnSearchHashtags.setBackground(Color.GRAY);
-		btnSearchHashtags.setBounds(0, 363, 280, 46);
-		panel.add(btnSearchHashtags);
-		
 		JButton btnCloseSessions = new JButton("Close Sessions");
 		btnCloseSessions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -121,7 +110,7 @@ public class EditProfileScreen extends JFrame {
 		btnCloseSessions.setForeground(Color.WHITE);
 		btnCloseSessions.setFont(new Font("Dialog", Font.BOLD, 16));
 		btnCloseSessions.setBackground(Color.GRAY);
-		btnCloseSessions.setBounds(0, 418, 280, 46);
+		btnCloseSessions.setBounds(0, 364, 280, 46);
 		panel.add(btnCloseSessions);
 		
 		Panel setPanel = new Panel();
@@ -151,7 +140,7 @@ public class EditProfileScreen extends JFrame {
 				ArrayList<UserDataClass> searchPassResult = new ArrayList<UserDataClass>();
 				if(!searchPeopleBox.getText().equals("")) {
 					for(int i =0;i<userData.size();i++) {
-						if(userData.get(i).getUsername().equals(searchPeopleBox.getText())||userData.get(i).getUsername().contains(searchPeopleBox.getText())) {
+						if(!(userData.get(i).getUsername().equals(username))&&userData.get(i).getUsername().equals(searchPeopleBox.getText())||userData.get(i).getUsername().contains(searchPeopleBox.getText())) {
 							searchPassResult.add(userData.get(i));
 							
 						}
@@ -161,6 +150,7 @@ public class EditProfileScreen extends JFrame {
 				}
 				else {
 					// show msg
+					 JOptionPane.showMessageDialog(jf,"Enter Search value First","ERROR",JOptionPane.ERROR_MESSAGE);
 				}
 				
 				
@@ -191,11 +181,12 @@ public class EditProfileScreen extends JFrame {
 				ArrayList<UserDataClass> userData = Main.UserDataHolder;
 				if(searchUsernameBox.getText().equals("")) {
 					// show msg
+					 JOptionPane.showMessageDialog(jf,"Enter Search value first","ERROR",JOptionPane.ERROR_MESSAGE);
 				}else {
 					boolean ischeck=false;
 					UserDataClass data= null;
 					for(int i=0;i<userData.size();i++) {
-						if(userData.get(i).getUsername().equals(searchUsernameBox.getText())) {
+						if(userData.get(i).getUsername().equals(searchUsernameBox.getText())&&!(userData.get(i).getUsername().equals(username))) {
 							ischeck=true;
 							data = userData.get(i);
 						}else {
@@ -205,6 +196,8 @@ public class EditProfileScreen extends JFrame {
 					
 					if(ischeck) {
 						new ViewProfileScreen(data,username);
+					}else {
+						 JOptionPane.showMessageDialog(jf,"no such user exits","ERROR",JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				

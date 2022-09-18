@@ -37,18 +37,24 @@ public class ViewTweets extends JFrame {
 		contentPane.add(label);
 		
 		JLabel lblViewTweets = new JLabel("View Tweets");
-		lblViewTweets.setFont(new Font("Dialog", Font.BOLD, 20));
 		lblViewTweets.setBounds(306, 24, 435, 44);
+		lblViewTweets.setFont(new Font("Dialog", Font.BOLD, 20));
 		contentPane.add(lblViewTweets);
 		
 		Panel setPanel = new Panel();
 		setPanel.setBounds(22, 59, 869, 491);
 		  binaryDataStore bn = new binaryDataStore();
 		 ArrayList<TweetsDataHolder> tweetData =   bn.getTweetsData(username);
-		  JLabel tdLb;
+		 JLabel tdLb;
 		  JLabel usernameLb;
 		  JLabel tweetTimeLb;
 		  JSeparator separator;
+		 if(tweetData.size()==0) {
+			 tdLb = new JLabel("no tweets posted yet");
+				tdLb.setBounds(12,  121, 665, 74);
+				setPanel.add(tdLb);
+		 }else {
+		 
 		  
 			int x1= 121;
 			int x2= 94;
@@ -84,9 +90,9 @@ public class ViewTweets extends JFrame {
 		  
 		  JScrollPane scrollPane = new JScrollPane(setPanel);
 		    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	       scrollPane.setBounds(291, -14,980, 600);
+	       scrollPane.setBounds(22, 59, 869, 491);
 	        contentPane.add(scrollPane);
-
+		 }
 	}
 
 }

@@ -60,6 +60,7 @@ public class WelcomeScreen extends JFrame {
 	        public void actionPerformed(ActionEvent ae){ 
 	        //	new SignInScreen();
 	        	new SignInScreen();
+	        	dispose();
 	        	
 	        }});
 		
@@ -77,6 +78,7 @@ public class WelcomeScreen extends JFrame {
 	         //defining a method actionPerformed
 	        public void actionPerformed(ActionEvent ae){ 
 	        	new SignUpScreen();
+	        	dispose();
 	        }});
 	}
 }

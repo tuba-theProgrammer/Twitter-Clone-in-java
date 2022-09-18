@@ -30,6 +30,7 @@ public class SignUpScreen extends JFrame {
 	public SignUpScreen() {
 	
 		setBackground(new Color(192, 192, 192));
+		JFrame jf= this;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 		setBounds(100, 100, 902, 699);
@@ -126,28 +127,58 @@ public class SignUpScreen extends JFrame {
 			     Timestamp timestamp = new Timestamp(datetime);
 			     boolean checkState=false;
 				
-				if(!(ageField.getText().equals("")&&PassField.getText().equals("")&&GenderField.getText().equals("")&&userNameField.getText().equals("")&&nameField.getText().equals(""))) {
+				if(!(ageField.getText().equals("")&&PassField.getText().equals("")&&GenderField.getText().equals("")&&userNameField.getText().equals("")&&nameField.getText().equals(""))&&(GenderField.getText().equals("F")||GenderField.getText().equals("f")||GenderField.getText().equals("M")||GenderField.getText().equals("m"))) {
 					 for(int i=0;i<UserDataHolder.size();i++) {
 						 if(UserDataHolder.get(i).getUsername().equals(userNameField.getText())) {
 							 checkState=true;
 						 }
 					 }
 					 if(checkState==false) {
-						 UserDataHolder.add(new UserDataClass(nameField.getText(),userNameField.getText(),GenderField.getText(),PassField.getText(),timestamp.toString(), Integer.parseInt(ageField.getText()),true,"./imgpath",null,null));
+						 try {
+						 int ageVal =Integer.parseInt(ageField.getText());
+						 
+						 UserDataHolder.add(new UserDataClass(nameField.getText(),userNameField.getText(),GenderField.getText(),PassField.getText(),timestamp.toString(), ageVal,true,"./imgpath",null,null));
                          binaryDataStore bn= new  binaryDataStore();
                          bn.WriteUserData(nameField.getText(),userNameField.getText(),GenderField.getText(),PassField.getText(),timestamp.toString(), Integer.parseInt(ageField.getText()),true,"./imgpath");
                          // show msg data added successfully
+                         JOptionPane.showMessageDialog(jf,"Account Created successfully");
+						 
+                 
+						bn.WriteAllFollowingAndFollowers(userNameField.getText());
+						ArrayList<followingClass> followingList = bn.readFollowings(userNameField.getText());
+					    ArrayList<followerClass> followerList = bn.readFollowers(userNameField.getText());
+						int userIndex=0;
+						for(int i=0;i<UserDataHolder.size();i++) {
+							
+							if(UserDataHolder.get(i).getUsername().equals(userNameField.getText())) {
+								userIndex= i;
+							
+							}
+						
+						}
+						
+						
+						UserDataHolder.get(userIndex).setFollwers(followerList);
+						UserDataHolder.get(userIndex).setFollowings(followingList);
+
+						
+		
                          
                       
                         dispose();
                        new TimelineScreen(userNameField.getText());
+						 }catch(Exception ex) {
+							 JOptionPane.showMessageDialog(jf,"please enter correct age value","ERROR",JOptionPane.ERROR_MESSAGE);
+						 }
 					 }else {
 						 // username already existed 
+						 JOptionPane.showMessageDialog(jf,"User Already exists","ERROR",JOptionPane.ERROR_MESSAGE);
 					 }
 					 
 				}else {
 				
 					// empty field
+					 JOptionPane.showMessageDialog(jf,"Please enter data to all fields","ERROR",JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
